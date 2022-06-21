@@ -29,7 +29,7 @@ Vue.createApp({
             this.cardsJson.forEach(card => {
                 if (card.thruDate.valueOf() < actual.valueOf()) {
                     console.log(card.thruDate + " esta vencida ")
-                    axios.patch(`http://localhost:8080/api/cards/expired/${card.id}`)
+                    axios.patch(`/api/cards/expired/${card.id}`)
                     .then(() => {
                         this.reload() 
 
@@ -58,7 +58,7 @@ Vue.createApp({
                 confirmButtonText: 'Yes, delete it!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    axios.patch(`http://localhost:8080/api/cards/${id}`)
+                    axios.patch(`/api/cards/${id}`)
                         .then(response => {
                             Swal.fire(
                                 'Deleted!',
@@ -79,7 +79,7 @@ Vue.createApp({
         },
 
         load() {
-            axios.get(`http://localhost:8080/api/clients/current`)
+            axios.get(`/api/clients/current`)
                 .then(datos => {
                     this.datosJson = datos.data
                     this.cardsJson = datos.data.cards
@@ -94,7 +94,7 @@ Vue.createApp({
 
         reload() {
 
-            axios.get(`http://localhost:8080/api/clients/current`)
+            axios.get(`/api/clients/current`)
                 .then(datos => {
                     this.datosJson = datos.data
                     this.cardsJson = datos.data.cards
@@ -119,13 +119,13 @@ Vue.createApp({
 
         logout() {
             axios.post('/api/logout')
-                .then(response => window.location.href = "http://localhost:8080/web/index.html"
+                .then(response => window.location.href = "/web/index.html"
                 )
 
         },
 
         redirection() {
-            window.location.href = "http://localhost:8080/web/create-cards.html"
+            window.location.href = "/web/create-cards.html"
         }
 
 

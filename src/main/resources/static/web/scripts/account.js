@@ -14,7 +14,7 @@ Vue.createApp({
     created() {
         const urlParams = new URLSearchParams(window.location.search);
         this.id = urlParams.get('id');
-        axios.get(`http://localhost:8080/api/clients/current`)
+        axios.get(`/api/clients/current`)
             .then(datos => {
 
                 // console.log(datos)
@@ -24,7 +24,7 @@ Vue.createApp({
             }
             )
 
-        axios.get(`http://localhost:8080/api/accounts/${this.id}`)
+        axios.get(`/api/accounts/${this.id}`)
             .then(datosT => {
 
                 this.datosJsonAccounts = datosT.data
@@ -48,13 +48,13 @@ Vue.createApp({
     methods: {
         logout() {
             axios.post('/api/logout')
-                .then(response => window.location.href = "http://localhost:8080/web/index.html"
+                .then(response => window.location.href = "/web/index.html"
                 )
 
         },
 
         printTransactions(){
-            axios.post(`http://localhost:8080/api/pdf/${this.id}`,`desde=${this.since}&hasta=${this.till}`)
+            axios.post(`/api/pdf/${this.id}`,`desde=${this.since}&hasta=${this.till}`)
             .then(()=>console.log("descargado"))
 
         }

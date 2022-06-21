@@ -14,7 +14,7 @@ Vue.createApp({
 
     created() {
 
-        axios.get(`http://localhost:8080/api/clients/current`)
+        axios.get(`/api/clients/current`)
             .then(datos => {
                 this.datosJson = datos.data
 
@@ -47,7 +47,7 @@ Vue.createApp({
                                 icon: "success",
                                 button: "Ok"
                             })
-                            .then(response =>  window.location.href = "http://localhost:8080/web/cards.html")
+                            .then(response =>  window.location.href = "/web/cards.html")
                             
                         })
                         .catch(error => {
@@ -67,7 +67,7 @@ Vue.createApp({
 
         logout() {
             axios.post('/api/logout')
-                .then(response => window.location.href = "http://localhost:8080/web/index.html"
+                .then(response => window.location.href = "/web/index.html"
                 )
 
         },
