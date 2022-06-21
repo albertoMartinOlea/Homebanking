@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="shortcut icon" href="./img/otrauva1.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="./assets/styleCreateCards.css">
+    <title>Cards</title>
+</head>
+
+<body>
+
+    <header class="container-fluid">
+        <!--OFF CANVAS-->
+        <div class="row">
+            <div class="d-flex col-lg-4">
+                <nav class="navbar navbar-dark">
+                    <div class="d-flex">
+                        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+                            data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                            <span class="navbar-toggler-icon"></span>
+                            <a class="navbar-brand" href="#"><span>Menu</span> </a>
+                        </button>
+                    </div>
+
+
+                    <div class="offcanvas offcanvas-start " tabindex="-1" id="offcanvasNavbar"
+                        aria-labelledby="offcanvasNavbarLabel">
+                        <div class="offcanvas-header">
+                            <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
+                            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="offcanvas-body">
+                            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="./accounts.html">Accounts</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="./cards.html">Cards</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="./transfer.html">Transfer</a>
+                                </li>                              
+                            </ul>
+                        </div>
+                    </div>
+            </div>
+            </nav>
+
+
+            <div class="d-flex justify-content-center align-items-center col-lg-4">
+                <img class="w-6" src="./img/otrauva1.png" alt="uvas" id="logo">
+                <h1 id="titulo">Vinotinto Bank</h1>
+            </div>
+
+        </div>
+
+    </header>
+
+    <div id="app" class="container-fluid">
+
+        <div class="lds-roller loader" id="loader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+
+
+        <main class="container flex-column justify-content-center w-100">
+            <div class="rounded-bottom" id="nombre">
+                <div class="dropdown p-1 d-flex justify-content-end">
+                    <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+                        id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class=" animate__animated animate__bounceInLeft d-none d-sm-inline mx-1 px-1">
+                            {{datosJson.lastName+" "+datosJson.firstName}}</span>
+                        <img src="./img/usuario.png" alt="hugenerd" width="40" height="40" class="rounded-circle">
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu text-small shadow" aria-labelledby="dropdownUser1">
+                        <li class="px-3">{{datosJson.email}}</li>
+                        <li class="text-center mt-1"><button v-on:click="logout" type="button"
+                                class="custom-btn btn-9 w-auto">Sign Out</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="d-flex col-12 justify-content-end align-items-center mt-5 rounded" id="nombre">
+                <h2 class="animate__animated animate__bounceInLeft">Creation Cards</h2>
+                <img src="./img/credit-card.png" class="p-2" alt="imagen card" id="usuario">
+            </div>
+
+            <form class="d-flex flex-wrap justify-content-around tarjeta p-5" v-on:submit.prevent="create()">
+                <div class="select">
+                    <select  required v-model="selectedCardType">
+                        <option value="">Select type</option>
+                        <option value="DEBIT">Debit</option>
+                        <option value="CREDIT">Credit</option>
+                    </select>
+                </div>
+
+                <div class="select">
+                    <select required v-model="selectedCardColor">
+                        <option value="">Select color</option>
+                        <option value="GOLD">Gold</option>
+                        <option value="TITANIUM">Titanium</option>
+                        <option value="SILVER">Silver</option>
+                    </select>
+                </div>
+
+                <button type="submit" class=" custom-btn btn-9 mx-1">Create Cards</button>
+
+            </form>
+
+            <!-- Main content starts -->
+            <div class="container p-4 mt-5" id="promos">
+                <h1 class="text-center text-black animate__animated animate__bounceInLeft">Card Types</h1>
+                <div class="row mt-4 d-block">
+                    <div class="card-group text-center">
+                        <div class="card card1 rounded-start">
+                            <i class="fas fa-battery-quarter fa-2x"></i>
+                            <h2>Silver</h2>
+                            <small>Per month price:</small>
+                            <h1 class="card-title"> <i class="fas fa-rupee-sign"></i>$0</h1>
+                            <p class="card-text">
+                                <img src="./img/silver.png" alt="card silver" width="200">
+                            <p class="text-white p-2">This option is perfect if you have no experience in online banking but
+                                would like to have a card for all kinds of payments in selected currencies. </p>
+                            </p>
+                            <div class="card-footer"><a href="#createCard" class="button btn btn-dark"><i
+                                        class="fa fa-credit-card"></i> I want my card</a>
+                            </div>
+                        </div>
+                        <div class="card card2 text-white">
+                            <i class="fas fa-battery-half fa-2x"></i>
+                            <h2>Gold</h2>
+                            <small>Per month price:</small>
+                            <h1 class="card-title"> <i class="fas fa-rupee-sign"></i>$10</h1>
+
+                            <p class="card-text">
+                                <img src="./img/gold.png" alt="card gold" width="200">
+                            <p class="p-2">This offer provides you with extended support for your financial needs and is able to
+                                cover the needs of individual and business clients.
+                            </p>
+                            </p>
+                            <div class="card-footer"><a href="#createCard" class="button btn btn-dark"><i
+                                        class="fa fa-credit-card"></i> I want my card</a>
+                            </div>
+                        </div>
+                        <div class="card card3 text-white">
+                            <i class="fas fa-battery-full fa-2x"></i>
+                            <h2>Titanium</h2>
+                            <small>Per month price:</small>
+                            <h1 class="card-title"> <i class="fas fa-rupee-sign"></i>$20</h1>
+                            <p class="card-text">
+                                <img src="./img/titanium.png" alt="card titanium" width="200">
+                            <p class="text-white p-3">This Vinotinto Bank card proved to be an excellent financial solution
+                                for many clients
+                                and large companies around the world.</p>
+                            </p>
+
+                            <div class="card-footer"><a href="#createCard" class="button btn btn-dark"><i
+                                        class="fa fa-credit-card"></i> I want my card</a>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </main>
+
+    </div>
+
+
+    <footer class="w-100 container-fluid position-relative">
+        <div class="custom-shape-divider-top-1652288241">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"
+                preserveAspectRatio="none">
+                <path d="M1200 0L0 0 598.97 114.72 1200 0z" class="shape-fill"></path>
+            </svg>
+        </div>
+        <div class="row text-center">
+            <div class="mt-5 col-12 col-lg-4">
+                <h3>Links</h3>
+                <div class="text-center d-flex justify-content-center">
+                    <ul class="list-inline mt-1 gap-1">
+                        <li class="mt-1"><a href="./accounts.html">  <button class="custom-btn btn-9">Accounts</button></i></a></li>
+                        <li class="mt-1"><a href="./cards.html">  <button class="custom-btn btn-9">Cards</button></i></a></li>
+                        <li class="mt-1"><a href="./transfer.html">  <button class="custom-btn btn-9">Transfers</button></i></a></li>
+                    </ul>
+                    </li>
+                </div>
+            </div>
+            <div class="mt-5 col-12 col-lg-4 text-center">
+                <img src="./img/otrauva1.png" alt="logo banco Vinotinto" id="logoFooter">
+                <h2>Vinotinto Bank</h2>
+            </div>
+            <div class="text-center mt-5 col-12 col-lg-4">
+                <h3>Social media</h3>
+                <div class="text-center d-flex justify-content-center">
+                    <ul class="list-inline  d-flex gap-1">
+                        <li class="mt-1"><a href="https://www.facebook.com/"><i class="fa fa-facebook social-icon"
+                                    aria-hidden="true"></i></a></li>
+                        <li class="mt-1"><a href="https://twitter.com/"><i class="fa fa-twitter social-icon"
+                                    aria-hidden="true"></i></a>
+                        </li>
+                        <li class="mt-1"><a href="https://www.linkedin.com/"><i class="fa fa-linkedin social-icon"
+                                    aria-hidden="true"></i></a>
+                        <li class="mt-1"><a href="https://outlook.live.com/"><i class="fa fa-envelope social-icon"
+                                    aria-hidden="true"></i></a>
+                        </li>
+                    </ul>
+                    </li>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/vue@3"></script>
+    <script src="./scripts/create-cards.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

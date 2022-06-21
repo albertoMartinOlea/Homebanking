@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
+</head>
+
+<body>
+  <div id="app" class="container">{{ message }}
+
+    <div class="row">
+
+      <div class="col-lg-6 col-md-6 col-xs-12">
+        <h1>Client Manager</h1>
+
+        <form v-on:submit="addClient">
+          <div class="form-group">
+            <label for="nombre">Name:</label>
+            <input type="text" class="form-control" id="nombre" placeholder="Enter name" v-model="newFirstName"
+              required>
+          </div>
+          <div class="form-group">
+            <label for="apellido">Last name:</label>
+            <input type="text" class="form-control" id="apellido" placeholder="Enter last name" v-model="newLastName"
+              required>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Email address:</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+              placeholder="Enter email" v-model="newEmail" required>
+          </div>
+          <input type="submit" class="btn btn-success" value="Add client">
+
+        </form>
+
+        <h2>Client list</h2>
+        <table class="table table-dark">
+          <thead>
+            <tr>
+              <th scope="col">First name</th>
+              <th scope="col">Last name</th>
+              <th scope="col">Email</th>
+              <th scope="col">Edit</th>
+              <th scope="col">Delete</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(cliente,index) in clientes">
+              <td>{{cliente.firstName}}</td>
+              <td>{{cliente.lastName}}</td>
+              <td>{{cliente.email}}</td>
+              <!-- Button trigger modal -->
+              <td><button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                  :data-bs-target="'#'+cliente.lastName+index">
+                  Editar
+                </button>
+              </td>
+              <td>
+                <!-- Modal -->
+                <div class="modal" :id="cliente.lastName+index" tabindex="-1">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <!-- <h2 class="modal-title">titulo</h2> -->
+                        <h5 class="modal-title">Modal title</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        </button>
+                      </div>
+                      <div class="modal-body">
+
+                        <form>
+                          <div class="form-group">
+                            <label for="nombre">Name:</label>
+                            <input type="text" class="form-control" id="nombre" placeholder="Enter name"
+                              v-model="editFirstName" required>
+                          </div>
+                          <div class="form-group">
+                            <input type="text" class="form-control" id="apellido" placeholder="Enter last name"
+                              v-model="editLastName" required>
+                            <label for="apellido">Last name:</label>
+                          </div>
+                          <div class="form-group">
+                            <label for="exampleInputEmail1">Email address:</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1"
+                              aria-describedby="emailHelp" placeholder="Enter email" v-model="editEmail" required>
+                          </div>
+                        </form>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" v-on:click="editClient(cliente)">Save
+                          changes</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </td>
+
+              <td><button v-on:click="deleteClient(cliente)">❌</button></td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+
+      
+
+      <div class="col-lg-6 col-xs-12">
+        <h2>Clien REST response</h2>
+        <pre>{{datosJsonClientes}}</pre>
+
+      </div>
+    </div>
+
+
+     <!-- Create Loan -->
+
+     <form v-on:submit.prevent="createTypeLoan()" class="row g-3 needs-validation">
+      <div class="col-md-4">
+        <label for="validationCustom01" class="form-label">Loan name</label>
+        <input type="text" class="form-control" id="validationCustom01" v-model="loanName" required>
+      </div>
+      <div class="col-md-4">
+        <label for="validationCustom02" class="form-label">Maximo Amount</label>
+        <input type="number" class="form-control" id="validationCustom02" v-model="maxAmount" required>
+      </div>
+
+      <div class="col-md-3">
+        <label for="validationCustom04" class="form-label">Payments</label>
+        <select class="form-select" id="validationCustom04" v-model=payments required>
+          <option selected disabled value="">Select:</option>
+          <option :value="1">6,12</option>
+          <option :value="2">6,12,24</option>
+          <option :value="3">6,12,24,36</option>
+          <option :value="4">12,24</option>
+          <option :value="5">12,24,36</option>
+          <option :value="6">12,24,36,48</option>
+        </select>
+      </div>
+
+      <div class="col-md-3">
+        <label for="validationCustom05" class="form-label">Interest</label>
+        <input type="number" class="form-control" id="validationCustom05" v-model="interest" required>
+      </div>
+
+      <div class="col-12">
+        <button class="btn btn-primary" type="submit">Submit form</button>
+      </div>
+    </form>
+
+
+
+
+  </div>
+
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="https://unpkg.com/vue@3"></script>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="manager.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+    crossorigin="anonymous"></script>
+
+</body>
+
+</html>

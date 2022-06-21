@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="shortcut icon" href="./img/otrauva1.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="./assets/style.css">
+    <title>Accounts</title>
+</head>
+
+<body>
+
+    <header class="container-fluid">
+        <!--OFF CANVAS-->
+        <div class="row">
+            <div class="d-flex col-lg-4">
+                <nav class="navbar navbar-dark">
+                    <div class="d-flex">
+                        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+                            data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                            <span class="navbar-toggler-icon"></span>
+                            <a class="navbar-brand" href="#"><span>Menu</span> </a>
+                        </button>
+                    </div>
+
+                    <div class="offcanvas offcanvas-start " tabindex="-1" id="offcanvasNavbar"
+                        aria-labelledby="offcanvasNavbarLabel">
+                        <div class="offcanvas-header">
+                            <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
+                            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="offcanvas-body">
+                            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="#"> Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Accounts</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="./cards.html">Cards</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="./transfer.html">Transfer</a>
+                                </li>
+                        </div>
+                    </div>
+            </div>
+            </nav>
+
+
+            <div class="d-flex justify-content-center align-items-center col-lg-4">
+                <img class="w-6" src="./img/otrauva1.png" alt="uvas" id="logo">
+                <h1 id="titulo">Vinotinto Bank</h1>
+            </div>
+
+        </div>
+
+    </header>
+    <div id="app" class="container-fluid">
+
+        <main class="container justify-content-center w-100">
+            <div class="rounded-bottom" id="nombre">
+                <div class="dropdown p-1 d-flex justify-content-end">
+                    <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class=" animate__animated animate__bounceInLeft d-none d-sm-inline mx-1 px-1">{{datosJson.lastName+" "+datosJson.firstName}}</span>
+                        <img src="./img/usuario.png" alt="hugenerd" width="40" height="40" class="rounded-circle">
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu text-small shadow" aria-labelledby="dropdownUser1">
+                        <li class="px-3">{{datosJson.email}}</li>                    
+                        <li class="text-center mt-1"><button v-on:click="logout" type="button" class="custom-btn btn-9 mx-1">Sign Out</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="tarjeta d-flex">
+                <div class="container rounded text-center py-3 col-6">
+                    <div v-for="account in arrayAccounts" class="tarjeta2 my-5">
+                        <div v-if="account.visibility">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex">
+                                    <img class=" animate__animated animate__bounceInLeft" src="./img/money.png" alt="money" id="usuario">
+                                    <h5 class="card-title mt-2">Account:{{" "+account.number}}</h5>
+                                </div>
+                                <h5>{{account.accountType}}</h5>
+                                <div class="rounded-bottom">
+                                    <div class="dropdown p-1 d-flex justify-content-end">
+                                        <a href="#" class="d-flex align-items-center text-white text-decoration-none" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <img src="./img/icons8-pull-down-64.png" alt="drop-down" width="25">
+                                        </a>
+                                        <ul class="dropdown-menu dropdown-menu text-small shadow" aria-labelledby="dropdownUser1">
+                                            <li class="px-3"><a :href="'./account.html?id='+ account.id"><button class="custom-btn btn-9 mx-1">Transactions</button></a></li>                    
+                                            <li class="text-center mt-1"> <button v-on:click="deleteAccount(account.id)" type="button" class="custom-btn btn-9 w-auto">Delete account</button></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                    
+                                
+                                <!-- 
+                                -->
+                            </div>
+                            <div class="rounded">
+                                <div class="card-body d-flex text-white tarjeta2">
+                                    <p class="">Creation date: {{(account.creationDateTime).split("T")[0]}}</p>    
+                                    <p class="text-white ml-5">Balance: </p>
+                                    <p class="h3 ml-1">&#36{{account.balance}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                    
+                </div>
+                <div class="container py-3 mr-5 d-flex col-6 align-items-center" >
+                    <div v-for="card in cardsJson" class="text-white text-center my-2 mx-1 tarjeta2 rounded h-100" :class="{ 'gold' : card.color == 'GOLD', 'silver' : card.color == 'SILVER', 'titanium' : card.color == 'TITANIUM'}" id="show-cards">
+                        <a href="./cards.html" class="text-decoration-none text-white">
+                        <div class="h-30">
+                            <p>{{card.color}}</p>
+                            <p v-for="char in card.type">{{char}}</p>
+                            
+                        </div>
+                        <div class="text-black " :class="{ 'interlineado-cards' : card.type == 'DEBIT'}">
+
+                            <p class="pt-5" >NUMBER</p> 
+                            <p>{{card.number.slice(0,4)}}</p> 
+                            <p>{{card.number.slice(5,9)}}</p> 
+                            <p>{{card.number.slice(10,14)}}</p> 
+                            <p>{{card.number.slice(15,19)}}</p> 
+                    
+                        </div>
+                    </div>
+                </a>
+                </div>
+            </div>
+            
+            <div class="d-flex col-12 justify-content-around align-items-center mt-5">
+                
+                
+                <button v-on:click="createAccount()" v-if="arrayAccounts.length < 3" type="button" class="prueba"> Create new Account</button>
+                <a href="./loan-application.html" type="button" class="prueba text-decoration-none text-white text text-center">Apply Loans</a>
+                <a href="./create-cards.html" type="button" class="prueba text-decoration-none text-white text-center"> Request Cards</a>
+                <a href="./transfer.html" type="button" class="prueba text-decoration-none text-white text-center">Make a transfer</a>
+
+            </div>
+
+            <div class="d-flex col-12 justify-content-end align-items-center mt-5 rounded-top" id="nombre">
+                <h2 class="animate__animated animate__bounceInLeft">Loans</h2>
+                <img src="./img/loans.png" class="p-2" alt="imagen login" id="usuario">
+
+            </div>
+
+            <div>
+                <div class="accordion" id="myAccordion">
+                    <div class="accordion-item border-0">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button type="button" class="accordion-button" data-bs-toggle="collapse"
+                            aria-expanded="true" data-bs-target="#collapseOne">Your loans</button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#myAccordion">
+                            <div>
+                                <div v-if="arrayLoans.length > 0"
+                                    class="row justify-content-center gap-5 mt-1 px-3 rounded">
+                                    <table class="table table-hover ml-5 mr-5">
+                                        <thead id="thead">
+                                            <tr class="text-center">
+                                                <th scope="col">ID</th>
+                                                <th scope="col">Type</th>
+                                                <th scope="col">Amount</th>
+                                                <th scope="col">Payments</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tbody">
+
+                                            <tr class="text-center" v-for="loan in arrayLoans">
+                                                <td>{{loan.id}}</td>
+                                                <td>{{loan.name}}</td>
+                                                <td>{{loan.amount}}</td>
+                                                <td>{{loan.payments}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+
+                                <div v-else class="container-fliud row justify-content-center gap-5 rounded">
+                                    <table class="table table-hover">
+                                        <thead id="thead">
+                                            <tr class="text-center">
+                                                <th scope="col">Result</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tbody">
+
+                                            <tr class="text-center">
+                                                <td>This account does not have loans</td>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </main>
+
+    </div>
+
+
+    <footer class="w-100 container-fluid position-relative">
+        <div class="custom-shape-divider-top-1652288241">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"
+                preserveAspectRatio="none">
+                <path d="M1200 0L0 0 598.97 114.72 1200 0z" class="shape-fill"></path>
+            </svg>
+        </div>
+        <div class="row">
+            <div class="mt-5 text-center col-12 col-lg-4">
+                <h3>Links</h3>
+                <div class="text-center d-flex justify-content-center">
+                    <ul class="list-inline mt-1 gap-1">
+                        <li class="mt-1"><a href="#">  <button class="custom-btn btn-9">Accounts</button></i></a></li>
+                        <li class="mt-1"><a href="./cards.html">  <button class="custom-btn btn-9">Cards</button></i></a></li>
+                        <li class="mt-1"><a href="./transfer.html">  <button class="custom-btn btn-9">Transfers</button></i></a></li>
+                    </ul>
+                    </li>
+                </div>
+            </div>
+           
+            <div class="mt-5 col-12 col-lg-4 text-center">
+                <img src="./img/otrauva1.png" alt="logo banco Vinotinto" id="logoFooter">
+                <h2>Vinotinto Bank</h2>
+            </div>
+            <div class="mt-5 text-center col-12 col-lg-4">
+                <h3>Social media</h3>
+                <div class="text-center d-flex justify-content-center">
+                    <ul class="list-inline  d-flex mt-1 gap-1">
+                        <li class="mt-1"><a href="https://www.facebook.com/"><i class="fa fa-facebook social-icon"
+                                    aria-hidden="true"></i></a></li>
+                        <li class="mt-1"><a href="https://twitter.com/"><i class="fa fa-twitter social-icon"
+                                    aria-hidden="true"></i></a>
+                        </li>
+                        <li class="mt-1"><a href="https://www.linkedin.com/"><i class="fa fa-linkedin social-icon"
+                                    aria-hidden="true"></i></a>
+                        <li class="mt-1"><a href="https://outlook.live.com/"><i class="fa fa-envelope social-icon"
+                                    aria-hidden="true"></i></a>
+                        </li>
+                    </ul>
+                    </li>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/vue@3"></script>
+    <script src="./scripts/accounts.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
