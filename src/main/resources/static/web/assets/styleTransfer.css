@@ -48,6 +48,10 @@ header {
 
 }
 
+.nav-item{
+    font-size: x-large;
+}
+
 .card-text {
 
     font-family: Arial, sans-serif;
