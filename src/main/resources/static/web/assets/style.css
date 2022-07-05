@@ -123,6 +123,10 @@ li:hover {
     transition: 0.3s;
 }
 
+.nav-item{
+    font-size: x-large;
+}
+
 .custom-shape-divider-top-1652288241 {
     position: absolute;
     top: 0;
