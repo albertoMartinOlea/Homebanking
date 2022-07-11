@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -102,29 +103,28 @@ public class TransactionController {
 
     }
 
-    @PostMapping(path = "/pdf/{id}")
-    public ResponseEntity<Object> createPdf(@PathVariable long id, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate desde,
-                                            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate hasta)
-            throws FileNotFoundException, DocumentException {
+    /*   @PostMapping(path = "/pdf/{id}")
+     public ResponseEntity<Object> export( @PathVariable long id, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate desde,
+                                          @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate hasta)
+             throws FileNotFoundException, DocumentException {
 
-        Account account = accountService.getAccountById(id);
-        if(account == null){
-            return new ResponseEntity<>("The account does not exist",HttpStatus.FORBIDDEN);
-        }
+         Account account = accountService.getAccountById(id);
+         if(account == null){
+             return new ResponseEntity<>("The account does not exist",HttpStatus.FORBIDDEN);
+         }
 
-        Client client = account.getClient();
-        Set <Transaction> transaction = account.getTransactions();
-        Set <Transaction> transactionSet = transaction.stream().filter(transaction1 -> transaction1.getDate().toLocalDate().isBefore(hasta.plusDays(1))).collect(Collectors.toSet());
-        transactionSet.stream().filter(transaction1 -> transaction1.getDate().toLocalDate().isAfter(desde));
+         Client client = account.getClient();
+         Set <Transaction> transaction = account.getTransactions();
+         Set <Transaction> transactionSet = transaction.stream().filter(transaction1 -> transaction1.getDate().toLocalDate().isBefore(hasta.plusDays(1))).collect(Collectors.toSet());
+         transactionSet.stream().filter(transaction1 -> transaction1.getDate().toLocalDate().isAfter(desde));
 
         Document document = new Document();
-        String ruta = System.getProperty("user.home");
-        PdfWriter.getInstance(document,new FileOutputStream(ruta+"/Desktop/transactions.pdf"));
+       String ruta = System.getProperty("user.home");
+         PdfWriter.getInstance(document,new FileOutputStream(ruta+"/Desktop/transactions.pdf"));
+         document.open();
 
-        document.open();
-
-        Phrase p = new Phrase("ACCOUNT: "+account.getNumber());
-        document.add(p);
+         Phrase p = new Phrase("ACCOUNT: "+account.getNumber());
+         document.add(p);
 
         PdfPTable table = new PdfPTable(5);
         table.setWidthPercentage(100);
@@ -157,5 +157,5 @@ public class TransactionController {
         document.add(table);
         document.close();
         return new ResponseEntity<>("Summary of successfully created transactions",HttpStatus.ACCEPTED);
-    }
+    }*/
 }
